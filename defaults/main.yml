@@ -1,0 +1,20 @@
+---
+base_php_packages:
+  - composer
+  - php7.0
+  - php7.0-fpm
+  - php7.0-cli
+  - php7.0-mcrypt
+  - php7.0-curl
+  - php7.0-mbstring
+
+custom_php_packages: []
+
+php_memory_limit: 128M
+php_max_execution_time: 300
+
+php_smtp_host: localhost
+php_smtp_port: 25
+php_sendmail_path: /usr/sbin/sendmail -t -i
+
+php_pools: {}

@@ -1,0 +1,21 @@
+---
+
+- name: "Create pool user {{ item.value.user }}"
+  no_log: True
+  user:
+    name: "{{ item.value.user }}"
+    createhome: "{{ item.value.createhome | default(False) }}"
+    home: "{{ item.value.home | default('/home/' + item.value.user) }}"
+    update_password: on_create
+
+- name: Create directory
+  file:
+    dest: "{{ item.value.working_dir }}"
+    state: directory
+  when: item.value.working_dir is defined
+
+- name: "Configure pool {{ item.key }}"
+  template:
+    src: etc/php/7.0/fpm/pool.d/pool.conf.j2
+    dest: "/etc/php/7.0/fpm/pool.d/{{ item.key }}.conf"
+  notify: Reload PHP

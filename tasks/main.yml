@@ -1,0 +1,32 @@
+---
+
+- name: Base packages
+  become: true
+  apt:
+    pkg: "{{ item }}"
+    state: latest
+    force: yes
+  with_items: "{{ base_php_packages }}"
+
+- name: Custom packages
+  apt:
+    pkg: "{{ item }}"
+    state: latest
+    force: yes
+  with_items: "{{ custom_php_packages }}"
+
+- name: Configure PHP fpm
+  template:
+    src: etc/php/7.0/fpm/php.ini
+    dest: /etc/php/7.0/fpm/php.ini
+  notify: Restart PHP
+
+- name: Configure pools
+  include_tasks: pools.yml
+  with_dict: "{{ php_pools }}"
+
+- name: Disable www pool
+  file:
+    path: /etc/php/7.0/fpm/pool.d/www.conf
+    state: absent
+  notify: Reload PHP
