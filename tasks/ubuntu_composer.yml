@@ -1,0 +1,32 @@
+---
+
+- name: Create directory
+  file:
+    path: /usr/src/composer
+    state: directory
+
+- name: Download composer
+  get_url:
+    url: https://getcomposer.org/installer
+    dest: /usr/src/composer/composer-installer.php
+    mode: 0755
+  register: composer_download
+
+- name: Install composer
+  command: /usr/bin/php /usr/src/composer/composer-installer.php
+  args:
+    chdir: /usr/src/composer
+  when: composer_download | changed
+
+- name: Link composer
+  file:
+    src: /usr/src/composer/composer.phar
+    dest: /usr/bin/composer
+    state: link
+
+- name: Update composer
+  command: /usr/bin/php /usr/src/composer/composer.phar self-update
+  args:
+    chdir: /usr/src/composer
+  register: composer_update
+  changed_when: "'Updating to version' in composer_update.stdout"

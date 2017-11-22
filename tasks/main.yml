@@ -1,18 +1,32 @@
 ---
 
+- name: Add PPA
+  apt_repository:
+    repo: "ppa:ondrej/php"
+    update_cache: yes
+  when: ansible_distribution_release in ('precise' 'trusty')
+
 - name: Base packages
   become: true
   apt:
     pkg: "{{ item }}"
     state: latest
-    force: yes
   with_items: "{{ base_php_packages }}"
+
+- name: Install composer
+  become: true
+  apt:
+    pkg: composer
+    state: latest
+  when: ansible_distribution == 'Debian'
+
+- import_tasks: ubuntu_composer.yml
+  when: ansible_distribution == 'Ubuntu'
 
 - name: Custom packages
   apt:
     pkg: "{{ item }}"
     state: latest
-    force: yes
   with_items: "{{ custom_php_packages }}"
 
 - name: Configure PHP fpm
