@@ -1,0 +1,8 @@
+---
+- hosts: localhost
+  vars:
+    php_pools:
+      example:
+        user: example
+  roles:
+    - ansible-role-php7

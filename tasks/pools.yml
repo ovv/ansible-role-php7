@@ -4,7 +4,7 @@
   no_log: True
   user:
     name: "{{ item.value.user }}"
-    createhome: "{{ item.value.createhome | default(False) }}"
+    createhome: "{{ item.value.createhome | default(True) }}"
     home: "{{ item.value.home | default('/home/' + item.value.user) }}"
     update_password: on_create
 
