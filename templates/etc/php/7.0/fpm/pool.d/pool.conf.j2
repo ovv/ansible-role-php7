@@ -1,9 +1,9 @@
 [{{ item.key}} ]
 user = {{ item.value.user }}
 group = {{ item.value.group | default(item.value.user) }}
-listen = {{ item.value.socket | default('/var/run/php7.0-fpm-' + item.value.user + '.sock') }}
-listen.owner = {{ item.value.socket_owner | default('www-data') }}
-listen.group = {{ item.value.socket_group | default('www-data') }}
+listen = {{ item.value.socket | default('/var/run/php7.0-fpm-' + item.key + '.sock') }}
+listen.owner = {{ item.value.listen_owner | default('www-data') }}
+listen.group = {{ item.value.listen_group | default('www-data') }}
 env[PATH] = /usr/local/bin:/usr/bin:/bin
 php_admin_value[disable_functions] = exec,passthru,shell_exec,system
 php_admin_flag[allow_url_fopen] = off
