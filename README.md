@@ -27,9 +27,9 @@ Role Variables
 * `php_pools`: Dict describing the php-fpm pools. Use the `key` as pool name.
     * `user`: Pool user (required).
     * `group`: Pool group (default to `user`).
-    * `createhome`: Create home for `user` (default to `True`).
+    * `createhome`: Create home for `user` (default to `False`).
     * `home`: `user` home (default to `/home/{{ user }}`)
-    * `working_dir`: Pool working directory (default to `/home/{{ user }}`).
+    * `working_dir`: Pool working directory (default to `/tmp`).
     * `socket`: PHP-fpm socket path (default to `/var/run/php7.0-fpm-{{ key }}.sock`)
     * `listen_owner`: Socket listen owner (default to `www-data`).
     * `listen_group`: Socket listen group (default to `www-data`).
