@@ -55,7 +55,7 @@ Example Playbook
       example:
         user: example
   roles:
-    - ansible-role-php7
+    - ovv.php7
 ```
 
 License
