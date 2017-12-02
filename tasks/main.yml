@@ -6,6 +6,17 @@
     update_cache: yes
   when: ansible_distribution_release in ('precise' 'trusty')
 
+- name: Dotdeb apt key
+  apt_key:
+    url: https://www.dotdeb.org/dotdeb.gpg
+  when: ansible_distribution_release == 'jessie'
+
+- name: Dotdeb apt repository
+  apt_repository:
+    repo: deb http://packages.dotdeb.org jessie all
+    update_cache: yes
+  when: ansible_distribution_release == 'jessie'
+
 - name: Base packages
   become: true
   apt:
@@ -18,10 +29,10 @@
   apt:
     pkg: composer
     state: latest
-  when: ansible_distribution == 'Debian'
+  when: ansible_distribution == 'Debian' and ansible_distribution_release != 'jessie'
 
-- import_tasks: ubuntu_composer.yml
-  when: ansible_distribution == 'Ubuntu'
+- import_tasks: composer.yml
+  when: ansible_distribution == 'Ubuntu' or ansible_distribution_release == 'jessie'
 
 - name: Custom packages
   apt:
