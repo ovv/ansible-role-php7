@@ -12,5 +12,5 @@ pm.max_children = {{ item.value.max_children | default(5) }}
 pm.start_servers = {{ item.value.servers | default(2) }}
 pm.min_spare_servers = {{ item.value.min_spare_servers | default(1) }}
 pm.max_spare_servers = {{ item.value.max_spare_servers | default(3) }}
-request_terminate_timeout = 300
+request_terminate_timeout = {{ item.value.request_terminate_timeout | default(300) }}
 chdir = {{ item.value.working_dir | default('/tmp') }}

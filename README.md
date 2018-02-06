@@ -37,6 +37,7 @@ Role Variables
     * `max_children` Maximum child servers (default to `5`).
     * `min_spare_servers`: Minimum spare servers (default to `1`).
     * `max_spare_servers`: Maximum spare servers (default to `3`).
+    * `request_terminate_timeout`: Maximum request time before timeout (default to `300`).
 * `base_php_packages`: Required packages to install (see [defaults](defaults/main.yml)).
 * `php_memory_limit`: PHP memory limit (default to `128M`).
 * `php_max_execution_time`: PHP max execution time (default to `300`).
