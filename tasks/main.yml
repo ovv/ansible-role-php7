@@ -20,9 +20,8 @@
 - name: Base packages
   become: true
   apt:
-    pkg: "{{ item }}"
+    pkg: "{{ base_php_packages }}"
     state: latest
-  with_items: "{{ base_php_packages }}"
 
 - name: Install composer
   become: true
@@ -36,9 +35,8 @@
 
 - name: Custom packages
   apt:
-    pkg: "{{ item }}"
+    pkg: "{{ custom_php_packages }}"
     state: latest
-  with_items: "{{ custom_php_packages }}"
 
 - name: Configure PHP fpm
   template:
