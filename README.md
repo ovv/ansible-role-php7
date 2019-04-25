@@ -23,6 +23,7 @@ $ git submodule add -b master https://github.com/ovv/ansible-role-php7.git ovv.p
 Role Variables
 --------------
 
+* `php_version`: PHP version to install
 * `custom_php_packages`: Custom packages to install (default to empty).
 * `php_pools`: Dict describing the php-fpm pools. Use the `key` as pool name.
     * `user`: Pool user (required).

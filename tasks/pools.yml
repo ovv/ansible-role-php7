@@ -10,6 +10,6 @@
 
 - name: "Configure pool {{ item.key }}"
   template:
-    src: etc/php/7.0/fpm/pool.d/pool.conf.j2
-    dest: "/etc/php/7.0/fpm/pool.d/{{ item.key }}.conf"
+    src: etc/php/fpm/pool.d/pool.conf.j2
+    dest: "/etc/php/{{ php_version}}/fpm/pool.d/{{ item.key }}.conf"
   notify: Reload PHP
