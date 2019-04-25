@@ -1,10 +1,17 @@
 ---
 
+- name: Requirements
+  apt:
+    pkg:
+      - gnupg2
+      - apt-transport-https
+    state: present
+
 - name: Add PPA
   apt_repository:
     repo: "ppa:ondrej/php"
     update_cache: yes
-  when: ansible_distribution_release in ('precise' 'trusty')
+  when: ansible_distribution_release in ('precise', 'trusty', 'xenial', 'bionic')
 
 - name: Dotdeb apt key
   apt_key:
@@ -16,6 +23,17 @@
     repo: deb http://packages.dotdeb.org jessie all
     update_cache: yes
   when: ansible_distribution_release == 'jessie'
+
+- name: sury.org apt key
+  apt_key:
+    url: https://packages.sury.org/php/apt.gpg
+  when: ansible_distribution_release == 'stretch' and php_version != 7.0
+
+- name: sury.org apt repository
+  apt_repository:
+    repo: deb https://packages.sury.org/php/ stretch main
+    update_cache: yes
+  when: ansible_distribution_release == 'stretch' and php_version != 7.0
 
 - name: Base packages
   become: true
@@ -40,8 +58,8 @@
 
 - name: Configure PHP fpm
   template:
-    src: etc/php/7.0/fpm/php.ini
-    dest: /etc/php/7.0/fpm/php.ini
+    src: "etc/php/fpm/php.ini"
+    dest: "/etc/php/{{ php_version}}/fpm/php.ini"
   notify: Restart PHP
 
 - name: Configure pools
@@ -50,6 +68,6 @@
 
 - name: Disable www pool
   file:
-    path: /etc/php/7.0/fpm/pool.d/www.conf
+    path: "/etc/php/{{ php_version}}/fpm/pool.d/www.conf"
     state: absent
   notify: Reload PHP
