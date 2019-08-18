@@ -1,9 +1,9 @@
 - name: Restart PHP
   service:
-    name: "php{{ php_version}}-fpm"
+    name: "php{{ php_version }}-fpm"
     state: restarted
 
 - name: Reload PHP
   service:
-    name: "php{{ php_version}}-fpm"
+    name: "php{{ php_version }}-fpm"
     state: reloaded
