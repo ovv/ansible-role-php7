@@ -11,5 +11,5 @@
 - name: "Configure pool {{ item.key }}"
   template:
     src: etc/php/fpm/pool.d/pool.conf.j2
-    dest: "/etc/php/{{ php_version}}/fpm/pool.d/{{ item.key }}.conf"
+    dest: "/etc/php/{{ php_version }}/fpm/pool.d/{{ item.key }}.conf"
   notify: Reload PHP

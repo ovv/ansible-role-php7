@@ -39,13 +39,13 @@
   become: true
   apt:
     pkg: "{{ base_php_packages }}"
-    state: latest
+    state: present
 
 - name: Install composer
   become: true
   apt:
     pkg: composer
-    state: latest
+    state: present
   when: ansible_distribution == 'Debian' and ansible_distribution_release != 'jessie'
 
 - import_tasks: composer.yml
@@ -54,12 +54,12 @@
 - name: Custom packages
   apt:
     pkg: "{{ custom_php_packages }}"
-    state: latest
+    state: present
 
 - name: Configure PHP fpm
   template:
     src: "etc/php/fpm/php.ini"
-    dest: "/etc/php/{{ php_version}}/fpm/php.ini"
+    dest: "/etc/php/{{ php_version }}/fpm/php.ini"
   notify: Restart PHP
 
 - name: Configure pools
@@ -68,6 +68,6 @@
 
 - name: Disable www pool
   file:
-    path: "/etc/php/{{ php_version}}/fpm/pool.d/www.conf"
+    path: "/etc/php/{{ php_version }}/fpm/pool.d/www.conf"
     state: absent
   notify: Reload PHP
